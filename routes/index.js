@@ -1,9 +1,9 @@
 const Router = require('express')
 const router = new Router()
 const roleRouter = require('./roleRouter')
-const accountRouter = require('./accountRouter')
+const authRouter = require('./authRouter')
 
 router.use('/role', roleRouter)
-router.use('/account', accountRouter)
+router.use('/auth', authRouter)
 
 module.exports = router

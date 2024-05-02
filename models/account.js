@@ -1,6 +1,7 @@
 const sequelize = require('../db')
 const {DataTypes} = require('sequelize');
 const Lesson = require('./lesson');
+const RefreshToken = require('./refreshToken');
 
 
 const Account = sequelize.define('Account', {
@@ -14,9 +15,9 @@ const Account = sequelize.define('Account', {
 
 Account.associate = (models) => {
     Account.belongsTo(models.Role)
-  };
+};
 
 Account.hasMany(Lesson, {foreignKey: 'accountId'})
-
+Account.hasMany(RefreshToken, {foreignKey: 'accountId'})
 
 module.exports = Account
