@@ -13,10 +13,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
-      expiresIn: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       accountId: {
         allowNull: false,
         references: {         
