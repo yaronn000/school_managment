@@ -1,6 +1,5 @@
 const sequelize = require('../db')
 const {DataTypes} = require('sequelize');
-const Presence = require('./presence');
 
 
 const Student = sequelize.define('Student', {
@@ -12,8 +11,7 @@ const Student = sequelize.define('Student', {
 
 Student.associate = (models) => {
     Student.belongsTo(models.Group)
-  };
-
-Student.hasMany(Presence, {foreignKey: 'studentId'})
+    Student.hasMany(models.Presence, {foreignKey: 'studentId'})
+}
 
 module.exports = Student

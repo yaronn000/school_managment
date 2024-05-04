@@ -3,13 +3,14 @@ const tokenService = require("./tokenService")
 const bcrypt = require('bcrypt');
 const ApiError = require('../middleware/apiError')
 const Account = require('../models/account')
+const models = require('../models')
 
 
 class UserService {
 
     async login(email, password) {
 
-        const user = await Account.findOne({where: {email}})
+        const user = await models.Account.findOne({where: {email}})
         if (!user) {
             throw ApiError.internalError('Пользователь с таким email не найден')
         }

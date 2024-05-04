@@ -1,27 +1,10 @@
-const Account = require('../models/account')
-const bcrypt = require('bcrypt')
-const ApiError = require('../middleware/apiError')
-const jwt = require('jsonwebtoken')
-const RefreshToken = require('../models/refreshToken')
+const sequelize = require('../db')
 const userService = require('../services/userService')
+const db = require('../models')
 
-const generateJwt = (id, email, role) => {
-    return jwt.sign({id, email, role},
-        process.env.ACCESS_SECRET_KEY,
-        {expiresIn: '15m'})
-}
 
 class AuthController {
 
-
-    async createAccount(req, res) {
-
-        let {surname, name, patronymic, email, password, roleId} = req.body
-        const hashPassword = await bcrypt.hash(password, 5)
-        const account = await Account.create({surname, name, patronymic, email, password: hashPassword, roleId})
-        return res.json(account)
-
-    }
 
     async login(req, res, next) {
         try {
@@ -59,7 +42,7 @@ class AuthController {
     async getInformation(req, res) {
 
         const {id} = req.params
-        const user = await Account.findOne({where: {id}})
+        const user = await db.Account.findOne({where: {id}, include: [{model: db.Role}]})
         return res.json(user)   
     }
 }

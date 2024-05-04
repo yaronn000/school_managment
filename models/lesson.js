@@ -12,12 +12,11 @@ const Lesson = sequelize.define('Lesson', {
 
 Lesson.associate = (models) => {
     Lesson.belongsTo(models.Account)
-  };
-Lesson.associate = (models) => {
     Lesson.belongsTo(models.Group)
-  };
-
-Lesson.hasMany(Report, {foreignKey: 'lessonId'})
-Lesson.hasMany(Presence, {foreignKey: 'lessonId'}) 
+    Lesson.hasMany(models.Report, {foreignKey: 'lessonId'})
+    Lesson.hasMany(models.Presence, {foreignKey: 'lessonId'}) 
+}
 
 module.exports = Lesson
+
+

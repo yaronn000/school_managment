@@ -8,7 +8,7 @@ const RefreshToken = sequelize.define('RefreshToken', {
 })
 
 RefreshToken.associate = (models) => {
-    RefreshToken.belongsTo(models.Account)
+    RefreshToken.belongsTo(models.Account, {foreignKey: 'accountId'})
   };
 
 module.exports = RefreshToken

@@ -14,10 +14,10 @@ const Account = sequelize.define('Account', {
 })
 
 Account.associate = (models) => {
-    Account.belongsTo(models.Role)
+    Account.belongsTo(models.Role, {foreignKey: 'roleId'})
+    Account.hasMany(models.Lesson, {foreignKey: 'accountId'})
+    Account.hasMany(models.RefreshToken, {foreignKey: 'accountId'})
 };
 
-Account.hasMany(Lesson, {foreignKey: 'accountId'})
-Account.hasMany(RefreshToken, {foreignKey: 'accountId'})
-
 module.exports = Account
+

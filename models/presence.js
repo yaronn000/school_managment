@@ -10,8 +10,6 @@ const Presence = sequelize.define('Presence', {
 
 Presence.associate = (models) => {
     Presence.belongsTo(models.Lesson)
-  };
-Presence.associate = (models) => {
     Presence.belongsTo(models.Student)
   }; 
 

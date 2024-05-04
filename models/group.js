@@ -1,7 +1,5 @@
 const sequelize = require('../db')
 const {DataTypes} = require('sequelize')
-const Lesson = require('./lesson')
-const Student = require('./student')
 
 
 const Group = sequelize.define('Group', {
@@ -9,7 +7,10 @@ const Group = sequelize.define('Group', {
     name: {type: DataTypes.STRING, allowNull: false},
 })
 
-Group.hasMany(Lesson, {foreignKey: 'groupId'})
-Group.hasMany(Student, {foreignKey: 'groupId'})
+Group.associate = (models) => {
+    Group.hasMany(models.Lesson, {foreignKey: 'groupId'})
+    Group.hasMany(models.Student, {foreignKey: 'groupId'})
+}
 
 module.exports = Group
+
