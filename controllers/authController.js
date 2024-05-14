@@ -1,6 +1,7 @@
 const sequelize = require('../db')
 const userService = require('../services/userService')
 const db = require('../models')
+const userInfo = require("../dtos/userInfoDto")
 
 
 class AuthController {
@@ -41,9 +42,10 @@ class AuthController {
 
     async getInformation(req, res) {
 
-        const {id} = req.params
+        const {id} = req.user
         const user = await db.Account.findOne({where: {id}, include: [{model: db.Role}]})
-        return res.json(user)   
+        const userDto = new userInfo(user)
+        return res.json(userDto)   
     }
 }
 
