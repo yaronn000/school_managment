@@ -9,8 +9,8 @@ const Presence = sequelize.define('Presence', {
 })
 
 Presence.associate = (models) => {
-    Presence.belongsTo(models.Lesson)
-    Presence.belongsTo(models.Student)
+    Presence.belongsTo(models.Lesson, {foreignKey: 'lessonId'})
+    Presence.belongsTo(models.Student, {foreignKey: 'studentId'})
   }; 
 
 module.exports = Presence

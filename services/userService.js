@@ -41,7 +41,7 @@ class UserService {
         if (!userData || !tokenInDB) {
             throw ApiError.forbiddenAccess();
         }
-        const user = await Account.findOne({where: {id: userData.id}});
+        const user = await Account.findOne({where: {id: userData.id}, include: [{model: db.Role}]});
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
 

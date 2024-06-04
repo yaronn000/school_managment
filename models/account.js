@@ -17,6 +17,7 @@ Account.associate = (models) => {
     Account.belongsTo(models.Role, {foreignKey: 'roleId'})
     Account.hasMany(models.Lesson, {foreignKey: 'accountId'})
     Account.hasMany(models.RefreshToken, {foreignKey: 'accountId'})
+    Account.hasMany(models.Student, {foreignKey: 'manager'})
 };
 
 module.exports = Account

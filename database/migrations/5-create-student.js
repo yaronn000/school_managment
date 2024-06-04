@@ -17,9 +17,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      manager: {
+      patronymic: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      manager: {
+        allowNull: false,
+        references: {         
+          model: 'Accounts',
+          key: 'id'
+        },
+        type: Sequelize.INTEGER
       },
       groupId: {
         allowNull: false,

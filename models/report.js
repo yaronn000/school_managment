@@ -10,7 +10,7 @@ const Report = sequelize.define('Report', {
 })
 
 Report.associate = (models) => {
-    Report.belongsTo(models.Lesson)
+    Report.belongsTo(models.Lesson, {foreignKey: 'lessonId'})
   };
 
 

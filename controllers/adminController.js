@@ -1,7 +1,5 @@
 const adminService = require("../services/adminService");
 
-
-
 class AdminController {
 
     async createUser(req, res, next) {
@@ -30,6 +28,26 @@ class AdminController {
             const updatedData = req.body
             await adminService.updateUser(id, updatedData);
             return res.json({message: "Данные пользователя обновлены"});
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getAllUsers(req, res, next) {
+        try {
+            const users = await adminService.getAll();
+            return res.json(users)
+
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getOneUser(req, res, next) {
+        try {
+            const {id} = req.params
+            const user = await adminService.getOne(id)
+            return res.json(user)
         } catch (e) {
             next(e);
         }

@@ -1,6 +1,8 @@
 const Account = require('../models/account')
 const bcrypt = require('bcrypt')
 const ApiError = require('../middleware/apiError')
+const UserInfo = require("../dtos/userInfoDto")
+const db = require('../models')
 
 class AdminService {
 
@@ -24,6 +26,20 @@ class AdminService {
         let {surname, name, patronymic, email, roleId} = data
         const user = await Account.update({surname, name, patronymic, email, roleId}, {where: {id}})
         return id
+    }
+
+    async getAll() {
+        const users = await Account.findAll()
+        for (let i = 0; i < users.length; i++) {
+            users[i] = new UserInfo(users[i])
+          }
+        return users
+    }
+
+    async getOne(id) {
+        let user = await Account.findOne({where: {id}, include: [{model: db.Role}]})
+        user = new UserInfo(user)
+        return user
     }
 
 }
