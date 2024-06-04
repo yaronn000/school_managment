@@ -5,11 +5,13 @@ const authRouter = require('./authRouter')
 const adminRouter = require('./adminRouter')
 const groupRouter = require('./groupRouter')
 const studentRouter = require('./studentRouter')
+const lessonRouter = require('./lessonRouter')
 
 router.use('/role', roleRouter)
 router.use('/auth', authRouter)
 router.use('/admin', adminRouter)
 router.use('/group', groupRouter)
 router.use('/student', studentRouter)
+router.use('/lesson', lessonRouter)
 
 module.exports = router
