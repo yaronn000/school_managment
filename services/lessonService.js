@@ -7,11 +7,10 @@ const { Op } = require('sequelize');
 const getDates = (dt) => {
     const t = dt.split('-')
     const date = new Date(t[0], (t[1] - 1), t[2], 4)
-    console.log(date)
     let begin = new Date(date)
     let end = new Date(date)
     const day = date.getDay()
-    console.log(day)
+
     if (day === 0) {
         begin.setDate(date.getDate() - 6)
         end.setDate(date.getDate())
@@ -24,7 +23,7 @@ const getDates = (dt) => {
         begin.setDate(date.getDate() - day + 1)
         end.setDate(date.getDate() + (7 - day))   
     }
-    console.log(begin + "   " + end)
+
     begin = begin.toISOString()
     begin = begin.split('T')[0]
     end = end.toISOString()
@@ -33,6 +32,17 @@ const getDates = (dt) => {
     return {begin, end}
 }
 
+function sortByDays(arr) {
+    let sorted = [[], [], [], [], [], [], []]
+    for (let i = 0; i < arr.length; i++) {
+        const t = arr[i].date.split('-')
+        const date = new Date(t[0], (t[1] - 1), t[2], 4)
+        const day = date.getDay()
+        if (day === 0) sorted[6].push(arr[i])    
+        else sorted[day - 1].push(arr[i])    
+    }
+    return sorted
+}
 
 class LessonService {
 
@@ -59,10 +69,14 @@ class LessonService {
 
     async getAllForTeacher(accountId, date) {
         const dates = getDates(date)
-        const lessons = await Lesson.findAll({where: {accountId, date: {[Op.between]: [dates.begin, dates.end]}}, include: [{model: db.Group}]})
+        let lessons = await Lesson.findAll({order: [
+            ['date', 'asc'],
+            ['time', 'asc']
+         ], where: {accountId, date: {[Op.between]: [dates.begin, dates.end]}}, include: [{model: db.Group}]})
         for (let i = 0; i < lessons.length; i++) {
             lessons[i] = new lessonInfo(lessons[i])
-          }
+        }
+        lessons = sortByDays(lessons)
         return lessons
     }
 
@@ -76,9 +90,7 @@ class LessonService {
             data.date = data.date.split('T')[0]
         }
         return data
-
     }
-
 }
 
 module.exports = new LessonService

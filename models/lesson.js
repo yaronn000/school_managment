@@ -13,7 +13,7 @@ const Lesson = sequelize.define('Lesson', {
 Lesson.associate = (models) => {
     Lesson.belongsTo(models.Account, {foreignKey: 'accountId'})
     Lesson.belongsTo(models.Group, {foreignKey: 'groupId'})
-    Lesson.hasMany(models.Report, {foreignKey: 'lessonId'})
+    Lesson.hasOne(models.Report, {foreignKey: 'lessonId'})
     Lesson.hasMany(models.Presence, {foreignKey: 'lessonId'}) 
 }
 
